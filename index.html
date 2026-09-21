@@ -1,26 +1,386 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World</title>
-    <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      h1 {
-        font-size: 3rem;
-        color: #222;
-      }
+    <title>Arduino Button & LED</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff1f2, #eef2ff);
+            color: #222;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+        }
+
+        .led-icon {
+            font-size: 45px;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 34px;
+            color: #1e1b4b;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-top: 7px;
+            font-size: 15px;
+        }
+
+        /* Introduction */
+        .intro {
+            text-align: center;
+            max-width: 700px;
+            margin: auto;
+            margin-bottom: 35px;
+        }
+
+        .intro p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .highlight {
+            color: #e11d48;
+            font-weight: bold;
+        }
+
+        /* Components */
+        .components {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .components h2,
+        .section-title {
+            color: #312e81;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .component-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .component {
+            padding: 9px 15px;
+            border-radius: 20px;
+            background: white;
+            color: #4338ca;
+            font-size: 13px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        }
+
+        /* Main content */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.75);
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        /* Wiring */
+        .wiring {
+            background: #18181b;
+            color: #e5e7eb;
+            padding: 18px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .red {
+            color: #fb7185;
+        }
+
+        .blue {
+            color: #60a5fa;
+        }
+
+        /* Code */
+        pre {
+            background: #18181b;
+            color: #e5e7eb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* Flow */
+        .flow-section {
+            text-align: center;
+            margin: 35px 0;
+        }
+
+        .flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .flow-item {
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .button {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .arduino {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .led {
+            background: #ffe4e6;
+            color: #e11d48;
+        }
+
+        .arrow {
+            color: #9ca3af;
+            font-size: 20px;
+        }
+
+        /* Learning */
+        .learning {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .learning p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .keywords {
+            margin-top: 12px;
+            color: #4338ca;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <h1>Hello, World!</h1>
-  </body>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header>
+        <div class="led-icon">🔴</div>
+
+        <h1>Arduino Button & LED</h1>
+
+        <p class="subtitle">
+            Arduino Uno • Wokwi Beginner Project
+        </p>
+    </header>
+
+
+    <!-- Introduction -->
+    <div class="intro">
+
+        <p>
+            A simple Arduino project where a
+            <span class="highlight">push button controls a red LED</span>.
+            When the button is pressed, the Arduino detects the input
+            and turns the LED on. When the button is released, the LED turns off.
+        </p>
+
+    </div>
+
+
+    <!-- Components -->
+    <div class="components">
+
+        <h2>🧩 Components</h2>
+
+        <div class="component-list">
+            <div class="component">Arduino Uno</div>
+            <div class="component">🔴 Red LED</div>
+            <div class="component">220Ω Resistor</div>
+            <div class="component">🔘 Push Button</div>
+            <div class="component">Jumper Wires</div>
+        </div>
+
+    </div>
+
+
+    <!-- Wiring + Code -->
+    <div class="content">
+
+        <div class="section">
+
+            <h2 class="section-title">🔌 Wiring</h2>
+
+            <div class="wiring">
+                Pin 13
+                <br>
+                ↓
+                <br>
+                220Ω Resistor
+                <br>
+                ↓
+                <br>
+                <span class="red">🔴 Red LED</span>
+                <br>
+                ↓
+                <br>
+                GND
+
+                <br><br>
+
+                Pin 2
+                <br>
+                ↓
+                <br>
+                <span class="blue">🔘 Push Button</span>
+                <br>
+                ↓
+                <br>
+                GND
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <h2 class="section-title">💻 Arduino Code</h2>
+
+<pre><code>void setup() {
+  pinMode(13, OUTPUT);
+  pinMode(2, INPUT_PULLUP);
+}
+
+void loop() {
+  int buttonState = digitalRead(2);
+
+  if (buttonState == LOW) {
+    digitalWrite(13, HIGH);
+  } else {
+    digitalWrite(13, LOW);
+  }
+}</code></pre>
+
+        </div>
+
+    </div>
+
+
+    <!-- Working Flow -->
+    <div class="flow-section">
+
+        <h2 class="section-title">⚙️ How It Works</h2>
+
+        <div class="flow">
+
+            <div class="flow-item button">
+                🔘 Press Button
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-item arduino">
+                🧠 Arduino Detects Input
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-item led">
+                🔴 LED Turns ON
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Learning -->
+    <div class="learning">
+
+        <h2 class="section-title">📚 What I Learned</h2>
+
+        <p>
+            This project demonstrates how Arduino can read an input
+            and control an output using simple programming logic.
+        </p>
+
+        <p class="keywords">
+            digitalRead() &nbsp; • &nbsp;
+            digitalWrite() &nbsp; • &nbsp;
+            pinMode() &nbsp; • &nbsp;
+            if / else
+        </p>
+
+    </div>
+
+
+    <footer>
+        Arduino Uno Project • Wokwi Simulation
+    </footer>
+
+</div>
+
+</body>
 </html>
+```
